@@ -16,6 +16,15 @@ var upgrader = websocket.Upgrader{
 
 var wsClients = make(map[*websocket.Conn]bool)
 
+func HandleAllWeatherRecords(w http.ResponseWriter, r *http.Request) {
+	data, err := repositories.GetAllWeather()
+	if err != nil {
+		httphelpers.RespondError(w, http.StatusInternalServerError, "Error retrieving weather data: "+err.Error())
+		return
+	}
+	httphelpers.RespondJSON(w, http.StatusOK, data)
+}
+
 func HandleWeatherIngest(w http.ResponseWriter, r *http.Request) {
 	var entry models.WeatherData
 
