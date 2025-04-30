@@ -1,30 +1,62 @@
-# (Senior) Fullstack Engineer (m/w/d) @OofOne Takehome
+# Weather API
 
-As part of our application process, we'd like to see you approach to technical challenges by giving you a small assignment that resembels the challenges awaiting you once you join OofOne. It should take you no more than a few hours to complete the assignment, but any extra polish or features you might want to put in will not go unnoticed.
+A simple and efficient RESTful API built with Go to manage historical weather data.
 
-## [](https://github.com/OofOne-SE/senior-software-engineer-takehome#the-assignment)The assignment
+## Features
 
-You will find two files in this repository (besides this `README`): `columns.yaml` and `weather.dat`.
-`weather.dat` contains mock weather data collected over several months. `columns.yaml` contains the headers for the given data.
+- Parse weather data from a `.dat` file
+- Store, retrieve, and delete weather records via RESTful endpoints
+- Simulate real-time data ingestion with a one-second interval
+- Modular architecture with clear separation of concerns
 
-Your task is to develop a small API using Go that works with the data as if it was realtime data.
-Write a small programm in the scripting language of your choice that iterates over the rows in the data file and sends them to an endpoint of yours one by one.
-The endpoint should accept the raw data and store it in a structured manner.
+## Project Structure
 
-Please also create endpoints to:
-- Retrieve the weather data for a given day
-- Retrieve the weather data for a range of days
-- Expose a websocket connection that transmits the latest data
+```
+weather-api-go/
+├── cmd/
+│   └── importer/         # CLI script for importing .dat data via HTTP POST
+├── config/               # Database configuration
+├── handlers/             # HTTP request handlers
+├── httphelpers/          # Utility functions for HTTP responses
+├── models/               # Data models
+├── parser/               # Parses .dat files into model structs
+├── repositories/         # Database operations
+├── routes/               # Route registration
+├── server/               # Server startup logic
+├── weather.dat           # Input data file
+└── main.go               # Entry point for the API server
+```
 
-Write tests as you find necessary and add simple documentation.
-Use any database.
+## Setup
 
-Consider the case that the data stream might increase in frequency in the future and the application will need to store larger amounts of data.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/jr0dbet/weather-api-go.git
+   cd weather-api-go
+   ```
 
-## [](https://github.com/OofOne-SE/senior-software-engineer-takehome#requirements)Requirements
+2. Start the API server:
+   ```bash
+   go run main.go
+   ```
 
-You may choose whatever technologies you prefer, the only requirement is Go as the backend language.
+3. Import data (requires the server to be running):
+   ```bash
+   go run cmd/importer/import_data.go
+   ```
 
-If you have any questions, please ask!
+## API Endpoints
 
-To complete your takehome, please fork this repo and commit your work to your fork. When you are ready for us to look at it, give us access to your fork so we can review and run it.
+- `GET /weather`: Retrieve all weather records
+- `POST /weather`: Insert a new record (expects JSON)
+- `GET /weather/range?from=YYYY-MM-DD&to=YYYY-MM-DD`: Filter by date range
+- `DELETE /weather`: Delete all records and reset ID sequence
+
+## Notes
+
+- Ensure PostgreSQL is running and properly configured in `config/database.go`
+- Timestamps must be in `RFC3339` format (`2006-01-02T15:04:05Z07:00`) when posting JSON data
+
+## License
+
+MIT
