@@ -86,6 +86,15 @@ func HandleWeatherByRange(w http.ResponseWriter, r *http.Request) {
 	httphelpers.RespondJSON(w, http.StatusOK, data)
 }
 
+func HandleDeleteAllWeatherRecords(w http.ResponseWriter, r *http.Request) {
+	if err := repositories.DeleteAllWeather(); err != nil {
+		httphelpers.RespondError(w, http.StatusInternalServerError, "Error deleting weather data: "+err.Error())
+		return
+	}
+
+	httphelpers.RespondJSON(w, http.StatusOK, map[string]string{"status": "All weather data deleted sucessfully"})
+}
+
 func HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {

@@ -19,6 +19,7 @@ func InitRouter() *mux.Router {
 	r.HandleFunc("/weather/all", api.HandleAllWeatherRecords).Methods("GET")
 	r.HandleFunc("/weather", api.HandleWeatherByDate).Methods("GET").Queries("date", "{date}")
 	r.HandleFunc("/weather", api.HandleWeatherByRange).Methods("GET").Queries("from", "{from}", "to", "{to}")
+	r.HandleFunc("/weather", api.HandleDeleteAllWeatherRecords).Methods("DELETE")
 	r.HandleFunc("/ws", api.HandleWebSocket)
 
 	return r
