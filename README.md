@@ -15,6 +15,7 @@ A simple and efficient RESTful API built with Go to manage historical weather da
 weather-api-go/
 ├── cmd/
 │   └── importer/         # CLI script for importing .dat data via HTTP POST
+│   └── server/           # Server startup logic
 ├── config/               # Database configuration
 ├── handlers/             # HTTP request handlers
 ├── httphelpers/          # Utility functions for HTTP responses
@@ -22,7 +23,6 @@ weather-api-go/
 ├── parser/               # Parses .dat files into model structs
 ├── repositories/         # Database operations
 ├── routes/               # Route registration
-├── server/               # Server startup logic
 ├── weather.dat           # Input data file
 └── main.go               # Entry point for the API server
 ```

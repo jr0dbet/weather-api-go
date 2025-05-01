@@ -18,7 +18,7 @@ const (
 func main() {
 	weatherData, err := parser.ParseWeatherData(filepath)
 	if err != nil {
-		log.Fatal("❌ Error parsing weather data: %v\n", err)
+		log.Fatalf("❌ Error parsing weather data: %v\n", err)
 	}
 
 	for _, record := range weatherData {

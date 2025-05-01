@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"log"
@@ -10,7 +10,7 @@ import (
 	"github.com/jr0dbet/weather-api-go.git/router"
 )
 
-func main() {
+func Run() error {
 	err := godotenv.Load()
 	if err != nil {
 		log.Print("⚠️ Cannot load .env file")
@@ -26,5 +26,5 @@ func main() {
 	}
 
 	log.Printf("🚀 Server is running on http://localhost:%s", port)
-	log.Fatal(http.ListenAndServe(": "+port, r))
+	return http.ListenAndServe(": "+port, r)
 }
