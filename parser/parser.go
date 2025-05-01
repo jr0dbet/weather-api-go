@@ -3,6 +3,7 @@ package parser
 import (
 	"bufio"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -36,11 +37,12 @@ func ParseWeatherData(filepath string) ([]models.WeatherData, error) {
 			continue
 		}
 
-		humidity, _ := strconv.Atoi(parts[1])
+		humidityFloat, _ := strconv.ParseFloat(parts[1], 64)
 		if err != nil {
 			log.Println("Error parsing humidity:", parts[1], err)
 			continue
 		}
+		humidity := int64(math.Round(humidityFloat))
 
 		temperature, _ := strconv.ParseFloat(parts[2], 64)
 		if err != nil {
